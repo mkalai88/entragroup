@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bedankt! — EntraGroup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2c2c2c;
+    --paper: #F1f4e5;
+    --accent: #4a5568;
+    --border: #dde0d0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: white;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 2rem;
+  }
+
+  .logo {
+    margin-bottom: 3rem;
+  }
+  .logo img {
+    height: 52px; width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .check {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(241,244,229,0.1);
+    border: 2px solid var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; margin: 0 auto 2rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  h1 em { font-style: italic; color: var(--paper); opacity: 0.7; }
+
+  p {
+    font-size: 1.05rem; font-weight: 300; line-height: 1.75;
+    color: rgba(255,255,255,0.6);
+    max-width: 480px; margin: 0 auto 2.5rem;
+  }
+
+  .btn {
+    background: var(--paper); color: var(--ink);
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.04em; text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+</style>
+</head>
+<body>
+  <div class="logo"><img src="logo.png" alt="EntraGroup"></div>
+  <div class="check">✓</div>
+  <h1>Bedankt voor je <em>bericht!</em></h1>
+  <p>We hebben je aanvraag goed ontvangen en nemen binnen één werkdag contact met je op.</p>
+  <a href="index.html" class="btn">Terug naar de homepage</a>
+</body>
+</html>

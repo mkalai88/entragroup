@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EntraGroup — IT Staffing & Recruitment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #1a1a1a;
+    --darker: #111111;
+    --paper: #F1f4e5;
+    --accent: #4CAF50;
+    --accent2: #2d6a30;
+    --mid: #888;
+    --border: #2a2a2a;
+    --nav-h: 72px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ──────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    background: var(--darker);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo img {
+    height: 44px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    mix-blend-mode: normal;
+  }
+
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+
+  .nav-cta {
+    background: white; color: var(--darker) !important;
+    padding: 0.55rem 1.4rem;
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: white !important; }
+
+  /* ─── HERO ─────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    background: var(--darker);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: calc(var(--nav-h) + 4rem) 8vw 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(8rem, 20vw, 22rem);
+    font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 2px; background: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(3.5rem, 8vw, 9rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: white;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+
+  h1 .outline {
+    -webkit-text-stroke: 2px rgba(255,255,255,0.4);
+    color: transparent;
+  }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .hero-sub {
+    font-size: 1rem; font-weight: 400; line-height: 1.7;
+    color: rgba(255,255,255,0.55); max-width: 420px;
+  }
+
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+
+  .btn-primary {
+    background: white; color: var(--darker);
+    padding: 0.9rem 2.2rem;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent; color: rgba(255,255,255,0.7);
+    padding: 0.9rem 2.2rem;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: white; color: white; }
+
+  .hero-stats {
+    display: flex; gap: 3rem;
+  }
+
+  .hero-stat-num {
+    font-size: 2.2rem; font-weight: 900; color: white; line-height: 1;
+  }
+  .hero-stat-num span { color: var(--accent); }
+  .hero-stat-label {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  /* ─── SECTION SHARED ───────────────────────── */
+  section { padding: 8rem 8vw; }
+
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 2px; background: var(--accent);
+  }
+
+  h2 {
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 900; line-height: 1.0;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-intro {
+    font-size: 1rem; font-weight: 400; line-height: 1.75;
+    color: #555; max-width: 560px;
+  }
+
+  /* ─── SERVICES ─────────────────────────────── */
+  #services { background: white; }
+
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+  }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid #e5e5e5;
+  }
+
+  .service-card {
+    padding: 3rem 2rem;
+    border-right: 1px solid #e5e5e5;
+    transition: background 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card:last-child { border-right: none; }
+
+  .service-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 4px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .service-card:hover { background: var(--darker); }
+  .service-card:hover::after { width: 100%; }
+  .service-card:hover .sc-title { color: white; }
+  .service-card:hover .sc-text { color: rgba(255,255,255,0.5); }
+  .service-card:hover .sc-link { color: var(--accent); }
+
+  .sc-title {
+    font-size: 1.1rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    margin-bottom: 1rem; line-height: 1.2;
+    transition: color 0.3s;
+  }
+
+  .sc-text {
+    font-size: 0.88rem; line-height: 1.75;
+    color: #555; margin-bottom: 2rem;
+    transition: color 0.3s;
+  }
+
+  .sc-link {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--dark); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: color 0.3s;
+  }
+  .sc-link::after { content: '→'; transition: transform 0.2s; }
+  .sc-link:hover::after { transform: translateX(4px); }
+
+  /* ─── OPDRACHTEN ───────────────────────────── */
+  #opdrachten { background: var(--paper); }
+
+  .opdrachten-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 2rem;
+  }
+
+  .filter-bar {
+    display: grid; grid-template-columns: 1fr auto auto auto;
+    gap: 0.8rem; margin-bottom: 2.5rem; align-items: end;
+  }
+
+  .search-wrap { position: relative; }
+  .search-wrap::before {
+    content: '⌕'; position: absolute; left: 0.9rem; top: 50%;
+    transform: translateY(-50%); font-size: 1.1rem; color: var(--mid);
+    pointer-events: none;
+  }
+
+  .filter-search {
+    width: 100%; padding: 0.75rem 1rem 0.75rem 2.4rem;
+    border: 1.5px solid #ccc; background: white; color: var(--dark);
+    font-family: 'Inter', sans-serif; font-size: 0.88rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .filter-search:focus { border-color: var(--dark); }
+  .filter-search::placeholder { color: #aaa; }
+
+  .filter-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--mid); margin-bottom: 0.3rem; display: block;
+  }
+
+  .filter-select {
+    padding: 0.75rem 2.2rem 0.75rem 0.9rem;
+    border: 1.5px solid #ccc; background: white; color: var(--dark);
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+    cursor: pointer; outline: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.8rem center;
+    transition: border-color 0.2s; min-width: 160px;
+  }
+  .filter-select:focus { border-color: var(--dark); }
+  .filter-select.active { border-color: var(--dark); background-color: var(--dark); color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+
+  .filter-group { display: flex; flex-direction: column; }
+
+  .filter-reset {
+    padding: 0.75rem 1rem; background: transparent; color: var(--mid);
+    border: 1.5px solid #ccc; font-family: 'Inter', sans-serif;
+    font-size: 0.8rem; font-weight: 500; cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .filter-reset:hover { color: var(--dark); border-color: var(--dark); }
+
+  .filter-results { font-size: 0.82rem; color: var(--mid); margin-bottom: 1.5rem; }
+  .filter-results strong { color: var(--dark); }
+
+  .opdrachten-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border: 1px solid #ddd;
+  }
+
+  .opdracht-card {
+    background: white; padding: 2rem;
+    display: flex; flex-direction: column;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: background 0.2s;
+  }
+  .opdracht-card:hover { background: #f9f9f9; }
+
+  .opdracht-type {
+    display: inline-block; padding: 0.25rem 0.7rem;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
+  .type-freelance { background: #e8f5e9; color: #2d6a30; }
+  .type-ws { background: #e3f2fd; color: #1565c0; }
+  .type-det { background: #f3e5f5; color: #6a1b9a; }
+  .type-opdracht { background: #fff8e1; color: #e65100; }
+
+  .opdracht-title {
+    font-size: 1.1rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.01em;
+    line-height: 1.2; margin-bottom: 0.5rem;
+  }
+
+  .opdracht-company { font-size: 0.82rem; font-weight: 500; color: var(--mid); margin-bottom: 1.2rem; }
+
+  .opdracht-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.4rem; flex: 1; }
+
+  .tag {
+    background: #f0f0f0; padding: 0.2rem 0.6rem;
+    font-size: 0.72rem; font-weight: 600; color: #444;
+  }
+
+  .opdracht-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1.2rem; border-top: 1px solid #eee;
+  }
+
+  .opdracht-meta { font-size: 0.78rem; color: var(--mid); }
+  .opdracht-meta strong { color: var(--dark); font-weight: 700; }
+
+  .opdracht-apply {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .opdracht-apply:hover { color: var(--dark); }
+
+  /* ─── WHY / OVER ONS ────────────────────────── */
+  #waarom { background: var(--darker); color: white; }
+  #waarom h2 { color: white; }
+
+  .waarom-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: start; margin-bottom: 5rem;
+  }
+
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; margin-top: 4rem;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .why-item {
+    padding: 3rem; border-right: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .why-item:nth-child(even) { border-right: none; }
+  .why-item:nth-child(3), .why-item:nth-child(4) { border-bottom: none; }
+
+  .why-title {
+    font-size: 1rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.04em; color: white; margin-bottom: 0.8rem;
+  }
+
+  .why-text { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.45); }
+
+  /* ─── OPDRACHTGEVERS ────────────────────────── */
+  #opdrachtgevers { background: white; }
+
+  .og-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-bottom: 5rem; }
+
+  .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e5e5e5; counter-reset: step; }
+
+  .step {
+    padding: 2rem 1.8rem; border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5; position: relative; counter-increment: step;
+  }
+  .step:nth-child(even) { border-right: none; }
+  .step:nth-child(3), .step:nth-child(4) { border-bottom: none; }
+
+  .step::before {
+    content: counter(step, decimal-leading-zero);
+    font-size: 3rem; font-weight: 900; color: rgba(0,0,0,0.04);
+    position: absolute; top: 1rem; right: 1.2rem; line-height: 1;
+  }
+
+  .step-line { width: 28px; height: 4px; background: var(--accent); margin-bottom: 1.2rem; }
+  .step-title { font-size: 0.95rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.6rem; line-height: 1.3; }
+  .step-text { font-size: 0.85rem; line-height: 1.75; color: #555; }
+
+  .voordelen-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border: 1px solid #e5e5e5;
+  }
+
+  .voordeel-card {
+    background: white; padding: 2rem 1.8rem;
+    border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;
+    transition: background 0.3s;
+  }
+  .voordeel-card:hover { background: var(--darker); }
+  .voordeel-card:hover .voordeel-title { color: white; }
+  .voordeel-card:hover .voordeel-text { color: rgba(255,255,255,0.45); }
+
+  .voordeel-title { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.6rem; transition: color 0.3s; }
+  .voordeel-text { font-size: 0.85rem; line-height: 1.75; color: #555; transition: color 0.3s; }
+
+  /* ─── CONTACT ────────────────────────────────── */
+  #contact {
+    background: var(--darker);
+    padding: 7rem 8vw;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+  }
+  #contact h2 { color: white; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-input {
+    padding: 0.85rem 1.1rem;
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: white; font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; outline: none;
+    transition: border-color 0.2s, background 0.2s; width: 100%;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.35); }
+  .form-input:focus { border-color: white; background: rgba(255,255,255,0.1); }
+  select.form-input option { background: var(--darker); }
+
+  .form-input.error { border-color: #ff4444 !important; background: rgba(255,68,68,0.1) !important; }
+  .form-error-msg { font-size: 0.75rem; color: #ff4444; font-weight: 600; margin-top: 0.3rem; display: none; }
+  .form-error-msg.visible { display: block; }
+
+  .btn-white {
+    background: white; color: var(--darker);
+    padding: 0.9rem 2rem; border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.2s;
+    align-self: flex-start;
+  }
+  .btn-white:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+
+  /* ─── FOOTER ─────────────────────────────────── */
+  footer { background: #0a0a0a; padding: 4rem 8vw 2rem; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; margin-bottom: 3rem; padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo img { height: 44px; width: auto; filter: brightness(0) invert(1); }
+  .footer-tagline { margin-top: 1rem; line-height: 1.7; color: rgba(255,255,255,0.3); }
+
+  .footer-col h4 {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: white; margin-bottom: 1.4rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.7rem; }
+  .footer-col a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; font-size: 0.85rem; }
+  .footer-col a:hover { color: white; }
+
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+
+  /* ─── ANIMATIONS ──────────────────────────────── */
+  .fade-up { opacity: 1; transform: translateY(0); transition: opacity 0.7s ease, transform 0.7s ease; }
+
+  /* ─── RESPONSIVE ──────────────────────────────── */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .opdrachten-grid { grid-template-columns: repeat(2, 1fr); }
+    .voordelen-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
+    .services-grid { grid-template-columns: 1fr; }
+    .opdrachten-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .og-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .steps { grid-template-columns: 1fr; }
+    .voordelen-grid { grid-template-columns: 1fr; }
+    #contact { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .filter-bar { grid-template-columns: 1fr 1fr; }
+    .search-wrap { grid-column: 1 / -1; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    .waarom-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo"><img src="logo.png" alt="EntraGroup"></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#opdrachten">Opdrachten</a></li>
+    <li><a href="#waarom">Over ons</a></li>
+    <li><a href="#opdrachtgevers">Voor opdrachtgevers</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top: calc(var(--nav-h) + 5rem);">
+  <div class="hero-bg-text">ENTRA</div>
+  <div class="hero-eyebrow">IT Staffing & Recruitment</div>
+  <h1>IT TALENT<br><span class="outline">VERBONDEN</span></h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">EntraGroup brengt de beste IT-professionals samen met organisaties die groeien. Eerlijk, transparant en zonder nep-vacatures.</p>
+    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2rem;">
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">450<span>+</span></div>
+          <div class="hero-stat-label">Professionals</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">8<span>jr</span></div>
+          <div class="hero-stat-label">IT-ervaring</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">98<span>%</span></div>
+          <div class="hero-stat-label">Tevreden</div>
+        </div>
+      </div>
+      <div class="hero-buttons">
+        <a href="#opdrachten" class="btn-primary">Bekijk opdrachten</a>
+        <a href="#services" class="btn-secondary">Onze services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-eyebrow">Wat wij doen</div>
+      <h2>Onze<br>services</h2>
+    </div>
+    <p class="section-intro">Vier specialisaties. Één doel: de juiste mensen op de juiste plek.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="sc-title">Freelance</div>
+      <p class="sc-text">Als zelfstandig IT-professional vind je jouw volgende opdracht direct op onze site. Reageer op wat je aanspreekt en wij zorgen dat je snel aan de slag kunt. Eerlijk, transparant en zonder omwegen.</p>
+      <a href="#opdrachten" class="sc-link">Bekijk opdrachten</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="sc-title">Payroll</div>
+      <p class="sc-text">Wil je de voordelen van freelancen maar dan met de zekerheid van een vast salaris? Via payrolling werk je in loondienst bij ons. Pensioenopbouw, doorbetaling bij ziekte en vakantiedagen inbegrepen.</p>
+      <a href="#contact" class="sc-link">Meer over payroll</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="sc-title">Vaste Baan</div>
+      <p class="sc-text">Ben je klaar voor een nieuwe vaste uitdaging? Wij koppelen je aan een organisatie die écht bij jou past — op techniek, cultuur én ambitie. Geen stapels nep-vacatures, alleen eerlijke kansen.</p>
+      <a href="#contact" class="sc-link">Ik zoek een vaste baan</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="sc-title">Voor Opdrachtgevers</div>
+      <p class="sc-text">Op zoek naar de ideale IT-kandidaat? Wij nemen het volledige selectieproces van je over. Van eerste intake tot de perfecte match — zorgvuldig, snel en zonder gedoe.</p>
+      <a href="#contact" class="sc-link">Opdracht plaatsen</a>
+    </div>
+  </div>
+</section>
+
+<!-- OPDRACHTEN -->
+<section id="opdrachten">
+  <div class="opdrachten-header">
+    <div>
+      <div class="section-eyebrow">Open posities</div>
+      <h2>Actuele<br>opdrachten</h2>
+    </div>
+    <a href="#" class="btn-primary" style="align-self:flex-end;">Alle opdrachten</a>
+  </div>
+
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="filter-label">Zoek opdracht</span>
+      <input class="filter-search" type="text" id="searchInput" placeholder="Bijv. Java Developer, React, DevOps...">
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Werkvorm</span>
+      <select class="filter-select" id="filterWerkvorm">
+        <option value="">Alle werkvormen</option>
+        <option value="freelance">Freelance</option>
+        <option value="detachering-payroll">Detachering / Payroll</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Provincie</span>
+      <select class="filter-select" id="filterLocatie">
+        <option value="">Alle provincies</option>
+        <option value="noord-holland">Noord-Holland</option>
+        <option value="zuid-holland">Zuid-Holland</option>
+        <option value="utrecht">Utrecht</option>
+        <option value="noord-brabant">Noord-Brabant</option>
+        <option value="gelderland">Gelderland</option>
+        <option value="overijssel">Overijssel</option>
+        <option value="groningen">Groningen</option>
+        <option value="friesland">Friesland</option>
+        <option value="drenthe">Drenthe</option>
+        <option value="flevoland">Flevoland</option>
+        <option value="zeeland">Zeeland</option>
+        <option value="limburg">Limburg</option>
+        <option value="remote">Remote</option>
+      </select>
+    </div>
+    <button class="filter-reset" id="filterReset">✕ Reset</button>
+  </div>
+  <div class="filter-results" id="filterResults"></div>
+
+  <div class="opdrachten-grid" id="opdrachtenGrid">
+    <div class="opdracht-card fade-up" data-werkvorm="freelance" data-locatie="noord-holland" data-title="Senior Java Developer">
+      <span class="opdracht-type type-freelance">Freelance</span>
+      <div class="opdracht-title">Senior Java Developer</div>
+      <div class="opdracht-company">FinTech Startup — Amsterdam</div>
+      <div class="opdracht-tags">
+        <span class="tag">Java 17</span><span class="tag">Spring Boot</span><span class="tag">Kubernetes</span><span class="tag">AWS</span>
+      </div>
+      <div class="opdracht-footer">
+        <div class="opdracht-meta"><strong>€85–€100</strong>/uur · 6 mnd</div>
+        <a href="#" class="opdracht-apply">Reageer →</a>
+      </div>
+    </div>
+    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="zuid-holland" data-title="Lead Frontend Engineer">
+      <span class="opdracht-type type-ws">Detachering</span>
+      <div class="opdracht-title">Lead Frontend Engineer</div>
+      <div class="opdracht-company">Retailer — Rotterdam</div>
+      <div class="opdracht-tags">
+        <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">Design Systems</span>
+      </div>
+      <div class="opdracht-footer">
+        <div class="opdracht-meta"><strong>€75k–€95k</strong> · Vast</div>
+        <a href="#" class="opdracht-apply">Reageer →</a>
+      </div>
+    </div>
+    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="zuid-holland" data-title=".NET Developer">
+      <span class="opdracht-type type-det">Payroll</span>
+      <div class="opdracht-title">.NET Developer</div>
+      <div class="opdracht-company">Overheid — Den Haag (hybride)</div>
+      <div class="opdracht-tags">
+        <span class="tag">.NET 8</span><span class="tag">C#</span><span class="tag">Azure</span><span class="tag">SQL Server</span>
+      </div>
+      <div class="opdracht-footer">
+        <div class="opdracht-meta"><strong>€70–€82</strong>/uur · 12 mnd</div>
+        <a href="#" class="opdracht-apply">Reageer →</a>
+      </div>
+    </div>
+    <div class="opdracht-card fade-up" data-werkvorm="freelance" data-locatie="remote" data-title="DevOps Engineer">
+      <span class="opdracht-type type-freelance">Freelance</span>
+      <div class="opdracht-title">DevOps Engineer</div>
+      <div class="opdracht-company">Scale-up — Remote / Utrecht</div>
+      <div class="opdracht-tags">
+        <span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">GCP</span>
+      </div>
+      <div class="opdracht-footer">
+        <div class="opdracht-meta"><strong>€90–€110</strong>/uur · 4 mnd</div>
+        <a href="#" class="opdracht-apply">Reageer →</a>
+      </div>
+    </div>
+    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="noord-holland" data-title="Python Data Engineer">
+      <span class="opdracht-type type-ws">Detachering</span>
+      <div class="opdracht-title">Python Data Engineer</div>
+      <div class="opdracht-company">Logistiek bedrijf — Amsterdam</div>
+      <div class="opdracht-tags">
+        <span class="tag">Python</span><span class="tag">PySpark</span><span class="tag">Databricks</span><span class="tag">dbt</span>
+      </div>
+      <div class="opdracht-footer">
+        <div class="opdracht-meta"><strong>€65k–€80k</strong> · Vast</div>
+        <a href="#" class="opdracht-apply">Reageer →</a>
+      </div>
+    </div>
+    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="zuid-holland" data-title="Scrum Master Agile Coach">
+      <span class="opdracht-type type-opdracht">Payroll</span>
+      <div class="opdracht-title">Scrum Master / Agile Coach</div>
+      <div class="opdracht-company">Verzekeraar — Rotterdam</div>
+      <div class="opdracht-tags">
+        <span class="tag">SAFe</span><span class="tag">Scrum</span><span class="tag">Stakeholder Mgmt</span>
+      </div>
+      <div class="opdracht-footer">
+        <div class="opdracht-meta"><strong>€80–€95</strong>/uur · 8 mnd</div>
+        <a href="#" class="opdracht-apply">Reageer →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OVER ONS -->
+<section id="waarom">
+  <div class="waarom-grid">
+    <div>
+      <div class="section-eyebrow">Over EntraGroup</div>
+      <h2>RECRUITMENT ZOALS HET HOORT</h2>
+      <p style="font-size:1rem; line-height:1.8; color:rgba(255,255,255,0.55); margin-top:1.5rem;">Na 8 jaar in de IT-wereld heb ik van dichtbij meegemaakt hoe frustrerend het recruitmentproces kan zijn. Vacatures die niet bestonden, recruiters die je toevoegden aan hun database zonder echte intentie.</p>
+      <p style="font-size:1rem; line-height:1.8; color:rgba(255,255,255,0.55); margin-top:1rem;">Dat wilde ik anders doen. Eerlijk, transparant en met oprechte aandacht voor wie je bent en wat je zoekt.</p>
+    </div>
+    <div style="border: 1px solid rgba(255,255,255,0.08); padding: 3rem;">
+      <div style="font-size:5rem; font-weight:900; color:var(--accent); line-height:1;">8</div>
+      <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:1.5rem;">Jaar IT-ervaring</div>
+      <div style="width:100%; height:1px; background:rgba(255,255,255,0.08); margin-bottom:1.5rem;"></div>
+      <p style="font-size:1rem; line-height:1.8; color:rgba(255,255,255,0.45); font-style:italic;">"Mensen op de juiste plek — maar nooit ten koste van de professional."</p>
+    </div>
+  </div>
+  <div class="why-grid">
+    <div class="why-item fade-up">
+      <div class="why-title">Freelance opdrachten</div>
+      <p class="why-text">Vind jouw volgende klus direct op onze site. Geen omwegen, geen nep-vacatures.</p>
+    </div>
+    <div class="why-item fade-up">
+      <div class="why-title">Payroll met zekerheid</div>
+      <p class="why-text">Opdrachten doen met de zekerheid van loondienst — pensioen, ziekte en vakantie inbegrepen.</p>
+    </div>
+    <div class="why-item fade-up">
+      <div class="why-title">Vaste baan, juiste match</div>
+      <p class="why-text">Wij koppelen je uitsluitend aan organisaties die écht bij jou passen op techniek én cultuur.</p>
+    </div>
+    <div class="why-item fade-up">
+      <div class="why-title">Ontzorgen als opdrachtgever</div>
+      <p class="why-text">Wij nemen het volledige selectieproces van je over. Zorgvuldig, snel en zonder gedoe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VOOR OPDRACHTGEVERS -->
+<section id="opdrachtgevers">
+  <div class="og-grid">
+    <div>
+      <div class="section-eyebrow">Voor opdrachtgevers</div>
+      <h2>VIND SNEL DE JUISTE IT-PROFESSIONAL</h2>
+      <p class="section-intro" style="margin-top:1.5rem;">Geen bulk-cv's, geen nep-kandidaten — alleen professionals die écht passen bij jouw opdracht en team.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-title">Intake & briefing</div>
+        <p class="step-text">We bespreken jouw opdracht, gewenste skills en bedrijfscultuur.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-title">Selectie uit ons netwerk</div>
+        <p class="step-text">Alleen kandidaten die écht bij de opdracht passen. Geen bulk, maar kwaliteit.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-title">Presentatie binnen 72 uur</div>
+        <p class="step-text">We presenteren de beste profielen. Jij bepaalt met wie je een gesprek wilt.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-title">Match & start</div>
+        <p class="step-text">Wij regelen het contract en blijven beschikbaar tijdens de samenwerking.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="section-eyebrow">Waarom kiezen voor ons</div>
+    <h2 style="margin-bottom:2.5rem;">Voordelen voor opdrachtgevers</h2>
+    <div class="voordelen-grid">
+      <div class="voordeel-card">
+        <div class="voordeel-title">Geen nep-kandidaten</div>
+        <p class="voordeel-text">Alleen professionals die we kennen en die beschikbaar zijn. Geen cv-spam.</p>
+      </div>
+      <div class="voordeel-card">
+        <div class="voordeel-title">Snelheid</div>
+        <p class="voordeel-text">Dankzij ons actieve netwerk presenteren we binnen 72 uur relevante profielen.</p>
+      </div>
+      <div class="voordeel-card">
+        <div class="voordeel-title">Transparante tarieven</div>
+        <p class="voordeel-text">Geen verborgen kosten. Open over tarieven en voorwaarden vanaf dag één.</p>
+      </div>
+      <div class="voordeel-card">
+        <div class="voordeel-title">Alleen IT</div>
+        <p class="voordeel-text">We richten ons uitsluitend op IT. Onze marktkennis is daardoor diepgaand.</p>
+      </div>
+      <div class="voordeel-card">
+        <div class="voordeel-title">Persoonlijk contact</div>
+        <p class="voordeel-text">Je werkt met een vaste contactpersoon die jouw organisatie en vraagstuk kent.</p>
+      </div>
+      <div class="voordeel-card">
+        <div class="voordeel-title">Begeleiding na plaatsing</div>
+        <p class="voordeel-text">We zijn er ook ná de start. Wij zorgen dat de samenwerking soepel blijft verlopen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div>
+    <div class="section-eyebrow" style="color:rgba(255,255,255,0.5);">Opdracht plaatsen</div>
+    <h2>VERTEL ONS WAT JE ZOEKT</h2>
+    <p style="font-size:1rem; line-height:1.75; color:rgba(255,255,255,0.45); margin-top:1rem; max-width:380px;">Vul het formulier in en we nemen binnen één werkdag contact op. Geen verplichtingen, gewoon een goed gesprek.</p>
+  </div>
+  <div>
+    <form class="contact-form" id="mainForm" name="opdracht-plaatsen" method="POST" data-netlify="true" action="/bedankt.html">
+      <input type="hidden" name="form-name" value="opdracht-plaatsen">
+      <div class="form-row">
+        <div>
+          <input class="form-input" type="text" name="voornaam" placeholder="Voornaam" required>
+          <span class="form-error-msg" id="err-voornaam">Vul je voornaam in</span>
+        </div>
+        <div>
+          <input class="form-input" type="text" name="achternaam" placeholder="Achternaam" required>
+          <span class="form-error-msg" id="err-achternaam">Vul je achternaam in</span>
+        </div>
+      </div>
+      <input class="form-input" type="text" name="bedrijfsnaam" placeholder="Bedrijfsnaam" required>
+      <span class="form-error-msg" id="err-bedrijfsnaam">Vul je bedrijfsnaam in</span>
+      <input class="form-input" type="email" name="email" placeholder="E-mailadres" required>
+      <span class="form-error-msg" id="err-email">Vul je e-mailadres in</span>
+      <input class="form-input" type="tel" name="telefoonnummer" placeholder="Telefoonnummer" required>
+      <span class="form-error-msg" id="err-telefoonnummer">Vul je telefoonnummer in</span>
+      <select class="form-input" name="werkvorm" required>
+        <option value="">Werkvorm</option>
+        <option>Freelance</option>
+        <option>Detachering / Payroll</option>
+        <option>Vaste aanstelling</option>
+        <option>Nog niet zeker</option>
+      </select>
+      <span class="form-error-msg" id="err-werkvorm">Kies een werkvorm</span>
+      <input class="form-input" type="text" name="gezochte-rol" placeholder="Gezochte rol (bijv. Java Developer, DevOps Engineer)" required>
+      <span class="form-error-msg" id="err-rol">Vul de gezochte rol in</span>
+      <textarea class="form-input" name="toelichting" rows="3" placeholder="Korte toelichting op de opdracht en gewenste startdatum..." required style="resize:vertical"></textarea>
+      <span class="form-error-msg" id="err-toelichting">Vul een korte toelichting in</span>
+      <button type="button" class="btn-white" onclick="validateForm()">Verstuur opdracht</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="#" class="footer-logo"><img src="logo.png" alt="EntraGroup"></a>
+      <p class="footer-tagline">Verbindt de beste IT-professionals met organisaties die groeien. Eerlijk, transparant en persoonlijk.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Freelance</a></li>
+        <li><a href="#">Payroll</a></li>
+        <li><a href="#">Vaste Baan</a></li>
+        <li><a href="#">Voor opdrachtgevers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Bedrijf</h4>
+      <ul>
+        <li><a href="#">Over ons</a></li>
+        <li><a href="#">Vacatures</a></li>
+        <li><a href="#">Verhalen</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:info@entragroup.nl">info@entragroup.nl</a></li>
+        <li><a href="tel:+31201234567">+31 (0)20 123 4567</a></li>
+        <li><a href="#">Amsterdam</a></li>
+        <li><a href="#">Rotterdam</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 EntraGroup. Alle rechten voorbehouden.</span>
+    <span>Privacyverklaring · Cookiebeleid · Disclaimer</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.02 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 1500);
+
+  const searchInput    = document.getElementById('searchInput');
+  const filterWerkvorm = document.getElementById('filterWerkvorm');
+  const filterLocatie  = document.getElementById('filterLocatie');
+  const filterReset    = document.getElementById('filterReset');
+  const filterResults  = document.getElementById('filterResults');
+  const cards          = document.querySelectorAll('.opdracht-card');
+
+  function applyFilters() {
+    const search   = searchInput.value.toLowerCase().trim();
+    const werkvorm = filterWerkvorm.value;
+    const locatie  = filterLocatie.value;
+    let visible = 0;
+    cards.forEach(card => {
+      const title = (card.dataset.title || '').toLowerCase();
+      const tags  = card.innerText.toLowerCase();
+      const cWerk = card.dataset.werkvorm || '';
+      const cLoc  = card.dataset.locatie  || '';
+      const ok = (!search || title.includes(search) || tags.includes(search))
+              && (!werkvorm || cWerk === werkvorm)
+              && (!locatie  || cLoc  === locatie);
+      card.style.display = ok ? 'flex' : 'none';
+      if (ok) visible++;
+    });
+    filterResults.innerHTML = visible === cards.length ? '' : `<strong>${visible}</strong> van <strong>${cards.length}</strong> opdrachten gevonden`;
+    filterWerkvorm.classList.toggle('active', !!werkvorm);
+    filterLocatie.classList.toggle('active', !!locatie);
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+  filterWerkvorm.addEventListener('change', applyFilters);
+  filterLocatie.addEventListener('change', applyFilters);
+  filterReset.addEventListener('click', () => {
+    searchInput.value = ''; filterWerkvorm.value = ''; filterLocatie.value = '';
+    filterWerkvorm.classList.remove('active'); filterLocatie.classList.remove('active');
+    cards.forEach(c => c.style.display = 'flex'); filterResults.innerHTML = '';
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  function validateForm() {
+    const fields = [
+      { id: 'voornaam',       err: 'err-voornaam' },
+      { id: 'achternaam',     err: 'err-achternaam' },
+      { id: 'bedrijfsnaam',   err: 'err-bedrijfsnaam' },
+      { id: 'email',          err: 'err-email' },
+      { id: 'telefoonnummer', err: 'err-telefoonnummer' },
+      { id: 'werkvorm',       err: 'err-werkvorm' },
+      { id: 'gezochte-rol',   err: 'err-rol' },
+      { id: 'toelichting',    err: 'err-toelichting' },
+    ];
+    let valid = true;
+    fields.forEach(f => {
+      const input = document.querySelector(`[name="${f.id}"]`);
+      const err   = document.getElementById(f.err);
+      if (!input.value.trim()) {
+        input.classList.add('error'); err.classList.add('visible'); valid = false;
+      } else {
+        input.classList.remove('error'); err.classList.remove('visible');
+      }
+    });
+    if (valid) document.getElementById('mainForm').submit();
+  }
+</script>
+</body>
+</html>
