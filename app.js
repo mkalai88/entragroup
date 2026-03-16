@@ -123,7 +123,7 @@
             status:       row.c[8]?.v || 'actief',
             omschrijving: row.c[9]?.v || '',
           }))
-          .filter(o => o.titel && o.status.toLowerCase() !== 'inactief');
+          .filter(o => o.titel && o.status.toLowerCase() !== 'inactief' && !formatDeadline(o.deadline)?.expired);
         renderOpdrachten(allOpdrachten);
       })
       .catch(() => {
