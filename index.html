@@ -894,7 +894,7 @@
       return;
     }
 
-    grid.innerHTML = data.map(o => {
+    grid.innerHTML = data.map((o, index) => {
       const deadline = formatDeadline(o.deadline);
       const skills = (o.skills || '').split(',').map(s => s.trim()).filter(Boolean);
       const deadlineHTML = deadline ? `
@@ -907,7 +907,8 @@
         <div class="opdracht-card fade-up"
           data-werkvorm="${getWerkvormData(o.werkvorm)}"
           data-locatie="${getLocatieData(o.locatie)}"
-          data-title="${o.titel}">
+          data-title="${o.titel}"
+          data-index="${index}">
           <span class="opdracht-type ${getWerkvormClass(o.werkvorm)}">${o.werkvorm}</span>
           ${deadlineHTML}
           <div class="opdracht-title">${o.titel}</div>
@@ -918,8 +919,8 @@
           <div class="opdracht-footer">
             <div class="opdracht-meta"><strong>${o.tarief}</strong> · ${o.looptijd}</div>
             <div style="display:flex; gap:0.8rem; align-items:center;">
-              <a href="#" class="opdracht-apply" onclick="openDetail(${JSON.stringify(o).replace(/'/g, "\\'")}); return false;">Bekijk opdracht</a>
-              ${!deadline?.expired ? `<a href="#" class="opdracht-apply" style="color:var(--dark);" onclick="openReageer('${o.titel.replace(/'/g, "\\'")}'); return false;">Reageer →</a>` : `<span style="font-size:0.75rem; color:#ff4444; font-weight:700;">VERLOPEN</span>`}
+              <a href="#" class="opdracht-apply" onclick="openDetail(${index}); return false;">Bekijk opdracht</a>
+              ${!deadline?.expired ? `<a href="#" class="opdracht-apply" style="color:var(--dark);" onclick="openReageer('${o.titel.replace(/'/g, "\\'")}'); return false;">Reageer \u2192</a>` : `<span style="font-size:0.75rem; color:#ff4444; font-weight:700;">VERLOPEN</span>`}
             </div>
           </div>
         </div>`;
@@ -962,7 +963,8 @@
   // ─── DETAIL MODAL ───────────────────────────
   let currentDetailTitel = '';
 
-  function openDetail(o) {
+  function openDetail(index) {
+    const o = allOpdrachten[index];
     currentDetailTitel = o.titel;
     const deadline = formatDeadline(o.deadline);
     const skills = (o.skills || '').split(',').map(s => s.trim()).filter(Boolean);
