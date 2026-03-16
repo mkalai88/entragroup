@@ -6,7 +6,7 @@
 
   // ─── GOOGLE SHEETS OPDRACHTEN ───────────────
   const SHEET_ID = '1vmeIKeQZfRr5N0Vw59GvjDVJ_8pZwgZ1IKTENKsZUFQ';
-  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`;
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
   let allOpdrachten = [];
 
@@ -41,10 +41,16 @@
     if (isNaN(date)) return null;
     const now = new Date();
     const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
-    const formatted = date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
-    if (diff < 0) return { text: `Verlopen op ${formatted}`, urgent: true, expired: true };
-    if (diff <= 7) return { text: `Nog ${diff} dag${diff === 1 ? '' : 'en'}`, urgent: true, expired: false };
-    return { text: `Deadline: ${formatted}`, urgent: false, expired: false };
+    const diffHours = Math.floor((date - now) / (1000 * 60 * 60));
+    const diffMins = Math.floor((date - now) / (1000 * 60));
+    const timeStr = date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+    const dateStr = date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    if (diffMins < 0) return { text: `Gesloten op ${dateStr} om ${timeStr}`, urgent: true, expired: true };
+    if (diffMins < 60) return { text: `Sluit over ${diffMins} minuten om ${timeStr}`, urgent: true, expired: false };
+    if (diffHours < 24) return { text: `Sluit vandaag om ${timeStr}`, urgent: true, expired: false };
+    if (diff <= 7) return { text: `Sluit over ${diff} dag${diff === 1 ? '' : 'en'} om ${timeStr}`, urgent: true, expired: false };
+    return { text: `Sluit op ${dateStr} om ${timeStr}`, urgent: false, expired: false };
   }
 
   function renderOpdrachten(data) {
@@ -58,8 +64,15 @@
       const deadline = formatDeadline(o.deadline);
       const skills = (o.skills || '').split(',').map(s => s.trim()).filter(Boolean);
       const deadlineHTML = deadline ? `
-        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
-          color:${deadline.urgent ? '#ff4444' : 'var(--mid)'}; margin-bottom:1rem;">
+        <div style="
+          background: ${deadline.expired ? '#2a2a2a' : deadline.urgent ? '#ff4444' : '#1a1a1a'};
+          color: white;
+          font-size: 0.72rem; font-weight: 700;
+          letter-spacing: 0.08em; text-transform: uppercase;
+          padding: 0.5rem 0.8rem;
+          margin-bottom: 1rem;
+          display: inline-block;
+        ">
           ⏱ ${deadline.text}
         </div>` : '';
 
@@ -142,7 +155,14 @@
     const deadlineEl = document.getElementById('detailDeadline');
     if (deadline) {
       deadlineEl.textContent = `⏱ ${deadline.text}`;
-      deadlineEl.style.color = deadline.urgent ? '#ff4444' : '#888';
+      deadlineEl.style.background = deadline.expired ? '#2a2a2a' : deadline.urgent ? '#ff4444' : '#1a1a1a';
+      deadlineEl.style.color = 'white';
+      deadlineEl.style.padding = '0.5rem 0.8rem';
+      deadlineEl.style.display = 'inline-block';
+      deadlineEl.style.fontSize = '0.72rem';
+      deadlineEl.style.fontWeight = '700';
+      deadlineEl.style.letterSpacing = '0.08em';
+      deadlineEl.style.textTransform = 'uppercase';
     } else {
       deadlineEl.textContent = '';
     }
