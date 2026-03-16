@@ -832,8 +832,8 @@
     <p style="font-size:1rem; line-height:1.75; color:rgba(255,255,255,0.45); margin-top:1rem; max-width:380px;">Vul het formulier in en we nemen binnen één werkdag contact op. Geen verplichtingen, gewoon een goed gesprek.</p>
   </div>
   <div>
-    <form class="contact-form" id="mainForm" name="opdracht-plaatsen" method="POST" data-netlify="true" action="/bedankt.html">
-      <input type="hidden" name="form-name" value="opdracht-plaatsen">
+    <form class="contact-form" id="mainForm" action="https://formspree.io/f/mzdjjdan" method="POST">
+
       <div class="form-row">
         <div>
           <input class="form-input" type="text" name="voornaam" placeholder="Voornaam" required>
@@ -895,7 +895,7 @@
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="mailto:info@entragroup.nl">info@entragroup.nl</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#137a7d757c53767d67617274617c66633d7d7f"><span class="__cf_email__" data-cfemail="d4bdbab2bb94b1baa0a6b5b3a6bba1a4fabab8">[email&#160;protected]</span></a></li>
         <li><a href="tel:+31201234567">+31 (0)20 123 4567</a></li>
         <li><a href="#">Amsterdam</a></li>
         <li><a href="#">Rotterdam</a></li>
@@ -908,7 +908,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.02 });
@@ -980,7 +980,23 @@
         input.classList.remove('error'); err.classList.remove('visible');
       }
     });
-    if (valid) document.getElementById('mainForm').submit();
+    if (valid) {
+      const form = document.getElementById('mainForm');
+      const data = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = 'bedankt.html';
+        } else {
+          alert('Er is iets misgegaan. Probeer het opnieuw.');
+        }
+      }).catch(() => {
+        alert('Er is iets misgegaan. Probeer het opnieuw.');
+      });
+    }
   }
 </script>
 </body>
