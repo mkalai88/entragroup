@@ -917,7 +917,10 @@
           </div>
           <div class="opdracht-footer">
             <div class="opdracht-meta"><strong>${o.tarief}</strong> · ${o.looptijd}</div>
-            ${!deadline?.expired ? `<a href="#" class="opdracht-apply" onclick="openReageer('${o.titel.replace(/'/g, "\\'")}'); return false;">Reageer →</a>` : `<span style="font-size:0.75rem; color:#ff4444; font-weight:700;">VERLOPEN</span>`}
+            <div style="display:flex; gap:0.8rem; align-items:center;">
+              <a href="#" class="opdracht-apply" onclick="openDetail(${JSON.stringify(o).replace(/'/g, "\\'")}); return false;">Bekijk opdracht</a>
+              ${!deadline?.expired ? `<a href="#" class="opdracht-apply" style="color:var(--dark);" onclick="openReageer('${o.titel.replace(/'/g, "\\'")}'); return false;">Reageer →</a>` : `<span style="font-size:0.75rem; color:#ff4444; font-weight:700;">VERLOPEN</span>`}
+            </div>
           </div>
         </div>`;
     }).join('');
@@ -934,15 +937,16 @@
         const rows = json.table.rows;
         allOpdrachten = rows
           .map(row => ({
-            titel:    row.c[0]?.v || '',
-            bedrijf:  row.c[1]?.v || '',
-            locatie:  row.c[2]?.v || '',
-            werkvorm: row.c[3]?.v || '',
-            tarief:   row.c[4]?.v || '',
-            looptijd: row.c[5]?.v || '',
-            skills:   row.c[6]?.v || '',
-            deadline: row.c[7]?.v || '',
-            status:   row.c[8]?.v || 'actief',
+            titel:        row.c[0]?.v || '',
+            bedrijf:      row.c[1]?.v || '',
+            locatie:      row.c[2]?.v || '',
+            werkvorm:     row.c[3]?.v || '',
+            tarief:       row.c[4]?.v || '',
+            looptijd:     row.c[5]?.v || '',
+            skills:       row.c[6]?.v || '',
+            deadline:     row.c[7]?.v || '',
+            status:       row.c[8]?.v || 'actief',
+            omschrijving: row.c[9]?.v || '',
           }))
           .filter(o => o.titel && o.status.toLowerCase() !== 'inactief');
         renderOpdrachten(allOpdrachten);
@@ -954,6 +958,59 @@
   }
 
   loadOpdrachten();
+
+  // ─── DETAIL MODAL ───────────────────────────
+  let currentDetailTitel = '';
+
+  function openDetail(o) {
+    currentDetailTitel = o.titel;
+    const deadline = formatDeadline(o.deadline);
+    const skills = (o.skills || '').split(',').map(s => s.trim()).filter(Boolean);
+
+    document.getElementById('detailTitel').textContent = o.titel;
+    document.getElementById('detailBedrijf').textContent = `${o.bedrijf} — ${o.locatie}`;
+    document.getElementById('detailTarief').textContent = o.tarief;
+    document.getElementById('detailLooptijd').textContent = o.looptijd;
+    document.getElementById('detailOmschrijving').textContent = o.omschrijving || 'Neem contact op voor meer informatie over deze opdracht.';
+
+    const werkvormEl = document.getElementById('detailWerkvorm');
+    werkvormEl.textContent = o.werkvorm;
+    werkvormEl.className = `opdracht-type ${getWerkvormClass(o.werkvorm)}`;
+
+    const deadlineEl = document.getElementById('detailDeadline');
+    if (deadline) {
+      deadlineEl.textContent = `⏱ ${deadline.text}`;
+      deadlineEl.style.color = deadline.urgent ? '#ff4444' : '#888';
+    } else {
+      deadlineEl.textContent = '';
+    }
+
+    document.getElementById('detailSkills').innerHTML = skills.map(s => `<span class="tag">${s}</span>`).join('');
+
+    const btn = document.getElementById('detailReageerBtn');
+    if (deadline?.expired) {
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = 'block';
+    }
+
+    document.getElementById('detailModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetail() {
+    document.getElementById('detailModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function openReageerFromDetail() {
+    closeDetail();
+    openReageer(currentDetailTitel);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeDetail(); closeReageer(); }
+  });
 
   // ─── REAGEER MODAL ──────────────────────────
   function openReageer(titel) {
@@ -967,8 +1024,6 @@
     document.getElementById('reageerModal').style.display = 'none';
     document.body.style.overflow = '';
   }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReageer(); });
 
   // ─── FILTER LOGIC ───────────────────────────
   const searchInput    = document.getElementById('searchInput');
@@ -1078,6 +1133,47 @@
     }
   }
 </script>
+
+<!-- DETAIL MODAL -->
+<div id="detailModal" style="
+  display:none; position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,0.85); align-items:center; justify-content:center;
+  padding:2rem;
+">
+  <div style="
+    background:white; max-width:640px; width:100%;
+    max-height:85vh; overflow-y:auto;
+    padding:3rem; position:relative;
+  ">
+    <button onclick="closeDetail()" style="
+      position:absolute; top:1rem; right:1rem;
+      background:none; border:none; font-size:1.5rem;
+      cursor:pointer; color:#888;
+    ">✕</button>
+    <span id="detailWerkvorm" style="display:inline-block; padding:0.25rem 0.7rem; font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1rem;"></span>
+    <h3 id="detailTitel" style="font-size:1.6rem; font-weight:900; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:0.4rem;"></h3>
+    <div id="detailBedrijf" style="font-size:0.85rem; color:#888; margin-bottom:1.5rem;"></div>
+    <div id="detailDeadline" style="font-size:0.78rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.5rem;"></div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem;">
+      <div style="background:#f5f5f5; padding:1rem;">
+        <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin-bottom:0.3rem;">Tarief</div>
+        <div id="detailTarief" style="font-weight:700; font-size:1rem;"></div>
+      </div>
+      <div style="background:#f5f5f5; padding:1rem;">
+        <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin-bottom:0.3rem;">Looptijd</div>
+        <div id="detailLooptijd" style="font-weight:700; font-size:1rem;"></div>
+      </div>
+    </div>
+    <div id="detailSkills" style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:2rem;"></div>
+    <div id="detailOmschrijving" style="font-size:0.95rem; line-height:1.85; color:#444; margin-bottom:2rem; white-space:pre-line;"></div>
+    <button onclick="openReageerFromDetail()" id="detailReageerBtn" style="
+      background:#1a1a1a; color:white; border:none;
+      padding:0.9rem 2rem; font-family:Inter,sans-serif;
+      font-size:0.85rem; font-weight:800; letter-spacing:0.06em;
+      text-transform:uppercase; cursor:pointer;
+    ">Reageer op deze opdracht</button>
+  </div>
+</div>
 
 <!-- REAGEER MODAL -->
 <div id="reageerModal" style="
