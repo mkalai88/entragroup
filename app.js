@@ -110,6 +110,7 @@
         const json = JSON.parse(text.substr(47).slice(0, -2));
         const rows = json.table.rows;
         allOpdrachten = rows
+          .filter(row => row.c[0]?.v && row.c[0]?.v.toLowerCase() !== 'titel')
           .map(row => ({
             titel:        row.c[0]?.v || '',
             bedrijf:      row.c[1]?.v || '',
