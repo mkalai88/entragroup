@@ -648,79 +648,9 @@
     <button class="filter-reset" id="filterReset">✕ Reset</button>
   </div>
   <div class="filter-results" id="filterResults"></div>
-
   <div class="opdrachten-grid" id="opdrachtenGrid">
-    <div class="opdracht-card fade-up" data-werkvorm="freelance" data-locatie="noord-holland" data-title="Senior Java Developer">
-      <span class="opdracht-type type-freelance">Freelance</span>
-      <div class="opdracht-title">Senior Java Developer</div>
-      <div class="opdracht-company">FinTech Startup — Amsterdam</div>
-      <div class="opdracht-tags">
-        <span class="tag">Java 17</span><span class="tag">Spring Boot</span><span class="tag">Kubernetes</span><span class="tag">AWS</span>
-      </div>
-      <div class="opdracht-footer">
-        <div class="opdracht-meta"><strong>€85–€100</strong>/uur · 6 mnd</div>
-        <a href="#" class="opdracht-apply">Reageer →</a>
-      </div>
-    </div>
-    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="zuid-holland" data-title="Lead Frontend Engineer">
-      <span class="opdracht-type type-ws">Detachering</span>
-      <div class="opdracht-title">Lead Frontend Engineer</div>
-      <div class="opdracht-company">Retailer — Rotterdam</div>
-      <div class="opdracht-tags">
-        <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">Design Systems</span>
-      </div>
-      <div class="opdracht-footer">
-        <div class="opdracht-meta"><strong>€75k–€95k</strong> · Vast</div>
-        <a href="#" class="opdracht-apply">Reageer →</a>
-      </div>
-    </div>
-    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="zuid-holland" data-title=".NET Developer">
-      <span class="opdracht-type type-det">Payroll</span>
-      <div class="opdracht-title">.NET Developer</div>
-      <div class="opdracht-company">Overheid — Den Haag (hybride)</div>
-      <div class="opdracht-tags">
-        <span class="tag">.NET 8</span><span class="tag">C#</span><span class="tag">Azure</span><span class="tag">SQL Server</span>
-      </div>
-      <div class="opdracht-footer">
-        <div class="opdracht-meta"><strong>€70–€82</strong>/uur · 12 mnd</div>
-        <a href="#" class="opdracht-apply">Reageer →</a>
-      </div>
-    </div>
-    <div class="opdracht-card fade-up" data-werkvorm="freelance" data-locatie="remote" data-title="DevOps Engineer">
-      <span class="opdracht-type type-freelance">Freelance</span>
-      <div class="opdracht-title">DevOps Engineer</div>
-      <div class="opdracht-company">Scale-up — Remote / Utrecht</div>
-      <div class="opdracht-tags">
-        <span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">GCP</span>
-      </div>
-      <div class="opdracht-footer">
-        <div class="opdracht-meta"><strong>€90–€110</strong>/uur · 4 mnd</div>
-        <a href="#" class="opdracht-apply">Reageer →</a>
-      </div>
-    </div>
-    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="noord-holland" data-title="Python Data Engineer">
-      <span class="opdracht-type type-ws">Detachering</span>
-      <div class="opdracht-title">Python Data Engineer</div>
-      <div class="opdracht-company">Logistiek bedrijf — Amsterdam</div>
-      <div class="opdracht-tags">
-        <span class="tag">Python</span><span class="tag">PySpark</span><span class="tag">Databricks</span><span class="tag">dbt</span>
-      </div>
-      <div class="opdracht-footer">
-        <div class="opdracht-meta"><strong>€65k–€80k</strong> · Vast</div>
-        <a href="#" class="opdracht-apply">Reageer →</a>
-      </div>
-    </div>
-    <div class="opdracht-card fade-up" data-werkvorm="detachering-payroll" data-locatie="zuid-holland" data-title="Scrum Master Agile Coach">
-      <span class="opdracht-type type-opdracht">Payroll</span>
-      <div class="opdracht-title">Scrum Master / Agile Coach</div>
-      <div class="opdracht-company">Verzekeraar — Rotterdam</div>
-      <div class="opdracht-tags">
-        <span class="tag">SAFe</span><span class="tag">Scrum</span><span class="tag">Stakeholder Mgmt</span>
-      </div>
-      <div class="opdracht-footer">
-        <div class="opdracht-meta"><strong>€80–€95</strong>/uur · 8 mnd</div>
-        <a href="#" class="opdracht-apply">Reageer →</a>
-      </div>
+    <div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--mid);">
+      Opdrachten worden geladen...
     </div>
   </div>
 </section>
@@ -914,14 +844,141 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 1500);
 
+  // ─── GOOGLE SHEETS OPDRACHTEN ───────────────
+  const SHEET_ID = '1vmeIKeQZfRr5N0Vw59GvjDVJ_8pZwgZ1IKTENKsZUFQ';
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+  let allOpdrachten = [];
+
+  function getWerkvormClass(werkvorm) {
+    const w = (werkvorm || '').toLowerCase();
+    if (w.includes('freelance')) return 'type-freelance';
+    if (w.includes('payroll')) return 'type-opdracht';
+    if (w.includes('detachering')) return 'type-ws';
+    return 'type-det';
+  }
+
+  function getWerkvormData(werkvorm) {
+    const w = (werkvorm || '').toLowerCase();
+    if (w.includes('freelance')) return 'freelance';
+    if (w.includes('payroll') || w.includes('detachering')) return 'detachering-payroll';
+    return 'detachering-payroll';
+  }
+
+  function getLocatieData(locatie) {
+    const l = (locatie || '').toLowerCase();
+    if (l.includes('amsterdam') || l.includes('noord-holland')) return 'noord-holland';
+    if (l.includes('rotterdam') || l.includes('den haag') || l.includes('zuid-holland')) return 'zuid-holland';
+    if (l.includes('utrecht')) return 'utrecht';
+    if (l.includes('eindhoven') || l.includes('brabant')) return 'noord-brabant';
+    if (l.includes('remote')) return 'remote';
+    return '';
+  }
+
+  function formatDeadline(deadline) {
+    if (!deadline) return null;
+    const date = new Date(deadline);
+    if (isNaN(date)) return null;
+    const now = new Date();
+    const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
+    const formatted = date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+    if (diff < 0) return { text: `Verlopen op ${formatted}`, urgent: true, expired: true };
+    if (diff <= 7) return { text: `Nog ${diff} dag${diff === 1 ? '' : 'en'}`, urgent: true, expired: false };
+    return { text: `Deadline: ${formatted}`, urgent: false, expired: false };
+  }
+
+  function renderOpdrachten(data) {
+    const grid = document.getElementById('opdrachtenGrid');
+    if (!data.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--mid);">Geen opdrachten gevonden</div>';
+      return;
+    }
+
+    grid.innerHTML = data.map(o => {
+      const deadline = formatDeadline(o.deadline);
+      const skills = (o.skills || '').split(',').map(s => s.trim()).filter(Boolean);
+      const deadlineHTML = deadline ? `
+        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+          color:${deadline.urgent ? '#ff4444' : 'var(--mid)'}; margin-bottom:1rem;">
+          ⏱ ${deadline.text}
+        </div>` : '';
+
+      return `
+        <div class="opdracht-card fade-up"
+          data-werkvorm="${getWerkvormData(o.werkvorm)}"
+          data-locatie="${getLocatieData(o.locatie)}"
+          data-title="${o.titel}">
+          <span class="opdracht-type ${getWerkvormClass(o.werkvorm)}">${o.werkvorm}</span>
+          ${deadlineHTML}
+          <div class="opdracht-title">${o.titel}</div>
+          <div class="opdracht-company">${o.bedrijf} — ${o.locatie}</div>
+          <div class="opdracht-tags">
+            ${skills.map(s => `<span class="tag">${s}</span>`).join('')}
+          </div>
+          <div class="opdracht-footer">
+            <div class="opdracht-meta"><strong>${o.tarief}</strong> · ${o.looptijd}</div>
+            ${!deadline?.expired ? `<a href="#" class="opdracht-apply" onclick="openReageer('${o.titel.replace(/'/g, "\\'")}'); return false;">Reageer →</a>` : `<span style="font-size:0.75rem; color:#ff4444; font-weight:700;">VERLOPEN</span>`}
+          </div>
+        </div>`;
+    }).join('');
+
+    // Reapply filters after render
+    applyFilters();
+  }
+
+  function loadOpdrachten() {
+    fetch(SHEET_URL)
+      .then(r => r.text())
+      .then(text => {
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+        allOpdrachten = rows
+          .map(row => ({
+            titel:    row.c[0]?.v || '',
+            bedrijf:  row.c[1]?.v || '',
+            locatie:  row.c[2]?.v || '',
+            werkvorm: row.c[3]?.v || '',
+            tarief:   row.c[4]?.v || '',
+            looptijd: row.c[5]?.v || '',
+            skills:   row.c[6]?.v || '',
+            deadline: row.c[7]?.v || '',
+            status:   row.c[8]?.v || 'actief',
+          }))
+          .filter(o => o.titel && o.status.toLowerCase() !== 'inactief');
+        renderOpdrachten(allOpdrachten);
+      })
+      .catch(() => {
+        document.getElementById('opdrachtenGrid').innerHTML =
+          '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--mid);">Opdrachten kunnen niet worden geladen. Probeer het later opnieuw.</div>';
+      });
+  }
+
+  loadOpdrachten();
+
+  // ─── REAGEER MODAL ──────────────────────────
+  function openReageer(titel) {
+    document.getElementById('modalTitel').textContent = titel;
+    document.getElementById('modalOpdracht').value = titel;
+    document.getElementById('reageerModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReageer() {
+    document.getElementById('reageerModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReageer(); });
+
+  // ─── FILTER LOGIC ───────────────────────────
   const searchInput    = document.getElementById('searchInput');
   const filterWerkvorm = document.getElementById('filterWerkvorm');
   const filterLocatie  = document.getElementById('filterLocatie');
   const filterReset    = document.getElementById('filterReset');
   const filterResults  = document.getElementById('filterResults');
-  const cards          = document.querySelectorAll('.opdracht-card');
 
   function applyFilters() {
+    const cards = document.querySelectorAll('.opdracht-card');
     const search   = searchInput.value.toLowerCase().trim();
     const werkvorm = filterWerkvorm.value;
     const locatie  = filterLocatie.value;
@@ -948,7 +1005,8 @@
   filterReset.addEventListener('click', () => {
     searchInput.value = ''; filterWerkvorm.value = ''; filterLocatie.value = '';
     filterWerkvorm.classList.remove('active'); filterLocatie.classList.remove('active');
-    cards.forEach(c => c.style.display = 'flex'); filterResults.innerHTML = '';
+    document.querySelectorAll('.opdracht-card').forEach(c => c.style.display = 'flex');
+    filterResults.innerHTML = '';
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -958,7 +1016,29 @@
     });
   });
 
-  function validateForm() {
+  function submitReageer() {
+    const form = document.getElementById('reageerForm');
+    const inputs = form.querySelectorAll('[required]');
+    let valid = true;
+    inputs.forEach(i => {
+      if (!i.value.trim()) { i.style.borderColor = '#ff4444'; valid = false; }
+      else { i.style.borderColor = '#ddd'; }
+    });
+    if (!valid) return;
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST', body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(r => {
+      if (r.ok) {
+        closeReageer();
+        form.reset();
+        window.location.href = 'bedankt.html';
+      } else {
+        alert('Er is iets misgegaan. Probeer het opnieuw.');
+      }
+    }).catch(() => alert('Er is iets misgegaan. Probeer het opnieuw.'));
+  }
     const fields = [
       { id: 'voornaam',       err: 'err-voornaam' },
       { id: 'achternaam',     err: 'err-achternaam' },
@@ -998,6 +1078,42 @@
     }
   }
 </script>
+
+<!-- REAGEER MODAL -->
+<div id="reageerModal" style="
+  display:none; position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,0.8); align-items:center; justify-content:center;
+  padding:2rem;
+">
+  <div style="
+    background:white; max-width:540px; width:100%;
+    padding:3rem; position:relative;
+  ">
+    <button onclick="closeReageer()" style="
+      position:absolute; top:1rem; right:1rem;
+      background:none; border:none; font-size:1.5rem;
+      cursor:pointer; color:#888;
+    ">✕</button>
+    <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#4CAF50; margin-bottom:0.5rem;">Reageer op opdracht</div>
+    <h3 id="modalTitel" style="font-size:1.4rem; font-weight:900; text-transform:uppercase; margin-bottom:2rem; letter-spacing:-0.01em;"></h3>
+    <form id="reageerForm" action="https://formspree.io/f/mzdjjdan" method="POST" style="display:flex; flex-direction:column; gap:0.8rem;">
+      <input type="hidden" name="opdracht" id="modalOpdracht">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+        <input type="text" name="voornaam" placeholder="Voornaam" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
+        <input type="text" name="achternaam" placeholder="Achternaam" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
+      </div>
+      <input type="email" name="email" placeholder="E-mailadres" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
+      <input type="tel" name="telefoon" placeholder="Telefoonnummer" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
+      <textarea name="motivatie" placeholder="Korte motivatie / toelichting..." rows="3" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none; resize:vertical;"></textarea>
+      <button type="button" onclick="submitReageer()" style="
+        background:#1a1a1a; color:white; border:none;
+        padding:0.9rem 2rem; font-family:Inter,sans-serif;
+        font-size:0.85rem; font-weight:800; letter-spacing:0.06em;
+        text-transform:uppercase; cursor:pointer; align-self:flex-start;
+      ">Verstuur reactie</button>
+    </form>
+  </div>
+</div>
 
 <!-- COOKIE MELDING -->
 <div id="cookieBanner" style="
