@@ -6,7 +6,7 @@
 
   // ─── GOOGLE SHEETS OPDRACHTEN ───────────────
   const SHEET_ID = '1vmeIKeQZfRr5N0Vw59GvjDVJ_8pZwgZ1IKTENKsZUFQ';
-  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`;
 
   let allOpdrachten = [];
 
