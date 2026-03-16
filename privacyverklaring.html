@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacyverklaring — EntraGroup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #1a1a1a;
+    --darker: #111111;
+    --paper: #F1f4e5;
+    --accent: #4CAF50;
+    --mid: #888;
+    --border: #2a2a2a;
+    --nav-h: 72px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    background: var(--darker);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo img {
+    height: 44px; width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-cta {
+    background: white; color: var(--darker) !important;
+    padding: 0.55rem 1.4rem; font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: white !important; }
+
+  /* HERO */
+  .page-hero {
+    background: var(--darker);
+    padding: calc(var(--nav-h) + 5rem) 8vw 5rem;
+  }
+
+  .page-eyebrow {
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .page-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 2px; background: var(--accent);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: -0.03em; color: white;
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+
+  .page-hero p {
+    font-size: 1rem; color: rgba(255,255,255,0.5);
+    max-width: 500px; line-height: 1.7;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 6rem 8vw;
+  }
+
+  .content h2 {
+    font-size: 1.3rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    margin: 3rem 0 1rem;
+    padding-top: 3rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .content h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+
+  .content p {
+    font-size: 0.95rem; line-height: 1.85;
+    color: #444; margin-bottom: 1rem;
+  }
+
+  .content ul {
+    margin: 1rem 0 1rem 1.5rem;
+  }
+
+  .content ul li {
+    font-size: 0.95rem; line-height: 1.85;
+    color: #444; margin-bottom: 0.5rem;
+  }
+
+  .content a {
+    color: var(--accent); text-decoration: none;
+  }
+  .content a:hover { text-decoration: underline; }
+
+  .last-updated {
+    font-size: 0.8rem; color: var(--mid);
+    margin-bottom: 3rem;
+  }
+
+  /* FOOTER */
+  footer { background: #0a0a0a; padding: 4rem 8vw 2rem; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; margin-bottom: 3rem; padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo img { height: 44px; width: auto; filter: brightness(0) invert(1); }
+  .footer-tagline { margin-top: 1rem; line-height: 1.7; color: rgba(255,255,255,0.3); }
+
+  .footer-col h4 {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: white; margin-bottom: 1.4rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.7rem; }
+  .footer-col a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; font-size: 0.85rem; }
+  .footer-col a:hover { color: white; }
+
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo"><img src="logo.png" alt="EntraGroup"></a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#opdrachten">Opdrachten</a></li>
+    <li><a href="index.html#waarom">Over ons</a></li>
+    <li><a href="index.html#opdrachtgevers">Voor opdrachtgevers</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-eyebrow">Juridisch</div>
+  <h1>Privacy-<br>verklaring</h1>
+  <p>EntraGroup respecteert uw privacy en verwerkt persoonsgegevens zorgvuldig en in overeenstemming met de AVG.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+  <p class="last-updated">Laatst bijgewerkt: maart 2025</p>
+
+  <h2>1. Wie zijn wij?</h2>
+  <p>EntraGroup is een IT staffing en recruitment bureau gevestigd in Gouda, Nederland. Wij zijn verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze privacyverklaring.</p>
+  <p>Contactgegevens:<br>
+  E-mail: <a href="mailto:info@entragroup.nl">info@entragroup.nl</a><br>
+  Telefoon: +31 6 15 16 56 25<br>
+  Website: <a href="https://entragroup.nl">entragroup.nl</a></p>
+
+  <h2>2. Welke gegevens verzamelen wij?</h2>
+  <p>Wij verzamelen de volgende persoonsgegevens wanneer u contact met ons opneemt via het contactformulier op onze website:</p>
+  <ul>
+    <li>Voornaam en achternaam</li>
+    <li>Bedrijfsnaam</li>
+    <li>E-mailadres</li>
+    <li>Telefoonnummer</li>
+    <li>Gewenste werkvorm</li>
+    <li>Gezochte rol of functie</li>
+    <li>Toelichting op de opdracht</li>
+  </ul>
+
+  <h2>3. Waarom verwerken wij uw gegevens?</h2>
+  <p>Wij verwerken uw persoonsgegevens voor de volgende doeleinden:</p>
+  <ul>
+    <li>Om contact met u op te nemen naar aanleiding van uw aanvraag</li>
+    <li>Om u te koppelen aan geschikte IT-professionals of opdrachten</li>
+    <li>Om onze dienstverlening te verbeteren</li>
+  </ul>
+  <p>De grondslag voor deze verwerking is uw toestemming (door het invullen van het formulier) en de uitvoering van een overeenkomst.</p>
+
+  <h2>4. Hoe lang bewaren wij uw gegevens?</h2>
+  <p>Wij bewaren uw persoonsgegevens niet langer dan noodzakelijk voor de doeleinden waarvoor ze zijn verzameld. In de praktijk betekent dit:</p>
+  <ul>
+    <li>Contactformulier gegevens: maximaal 1 jaar na laatste contact</li>
+    <li>Gegevens van kandidaten: maximaal 2 jaar na laatste contact, tenzij u toestemming geeft voor langere bewaring</li>
+  </ul>
+
+  <h2>5. Delen wij uw gegevens met derden?</h2>
+  <p>Wij verkopen uw gegevens nooit aan derden. Wij kunnen uw gegevens delen met:</p>
+  <ul>
+    <li>Opdrachtgevers, uitsluitend met uw expliciete toestemming</li>
+    <li>Dienstverleners die namens ons werken (zoals e-mailproviders), onder strikte vertrouwelijkheidsafspraken</li>
+  </ul>
+
+  <h2>6. Uw rechten</h2>
+  <p>U heeft de volgende rechten met betrekking tot uw persoonsgegevens:</p>
+  <ul>
+    <li><strong>Inzagerecht:</strong> u kunt opvragen welke gegevens wij van u hebben</li>
+    <li><strong>Rectificatierecht:</strong> u kunt onjuiste gegevens laten corrigeren</li>
+    <li><strong>Recht op verwijdering:</strong> u kunt vragen uw gegevens te verwijderen</li>
+    <li><strong>Recht op bezwaar:</strong> u kunt bezwaar maken tegen de verwerking</li>
+    <li><strong>Recht op dataportabiliteit:</strong> u kunt uw gegevens opvragen in een leesbaar formaat</li>
+  </ul>
+  <p>Om gebruik te maken van uw rechten kunt u contact opnemen via <a href="mailto:info@entragroup.nl">info@entragroup.nl</a>. Wij reageren binnen 30 dagen.</p>
+
+  <h2>7. Beveiliging</h2>
+  <p>Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beschermen tegen verlies, misbruik of onbevoegde toegang. Onze website maakt gebruik van een beveiligde HTTPS-verbinding.</p>
+
+  <h2>8. Cookies</h2>
+  <p>Onze website maakt gebruik van functionele cookies die noodzakelijk zijn voor het correct functioneren van de website. Wij plaatsen geen tracking- of marketingcookies zonder uw toestemming.</p>
+
+  <h2>9. Klachten</h2>
+  <p>Als u niet tevreden bent over de manier waarop wij uw gegevens verwerken, heeft u het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens via <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank">autoriteitpersoonsgegevens.nl</a>.</p>
+
+  <h2>10. Wijzigingen</h2>
+  <p>Wij behouden het recht deze privacyverklaring te wijzigen. De meest actuele versie is altijd te vinden op deze pagina. Bij belangrijke wijzigingen informeren wij u via e-mail.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="footer-logo"><img src="logo.png" alt="EntraGroup"></a>
+      <p class="footer-tagline">Verbindt de beste IT-professionals met organisaties die groeien. Eerlijk, transparant en persoonlijk.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="index.html#services">Freelance</a></li>
+        <li><a href="index.html#services">Payroll</a></li>
+        <li><a href="index.html#services">Vaste Baan</a></li>
+        <li><a href="index.html#opdrachtgevers">Voor opdrachtgevers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Bedrijf</h4>
+      <ul>
+        <li><a href="index.html#waarom">Over ons</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="privacyverklaring.html">Privacyverklaring</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:info@entragroup.nl">info@entragroup.nl</a></li>
+        <li><a href="tel:+31615165625">+31 6 15 16 56 25</a></li>
+        <li><a href="#">Gouda</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 EntraGroup. Alle rechten voorbehouden.</span>
+    <span><a href="privacyverklaring.html" style="color:rgba(255,255,255,0.4);">Privacyverklaring</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
