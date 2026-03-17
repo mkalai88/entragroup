@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opdracht Toevoegen — EntraGroup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+
+  .card {
+    background: white;
+    max-width: 640px; width: 100%;
+    padding: 3rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .logo {
+    font-size: 1.2rem; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    color: #1a1a1a; margin-bottom: 2rem;
+  }
+  .logo span { color: #4CAF50; }
+
+  h1 {
+    font-size: 1.6rem; font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem; color: #888;
+    margin-bottom: 2rem;
+  }
+
+  .form-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #888;
+  }
+
+  input, select, textarea {
+    padding: 0.8rem 1rem;
+    border: 1.5px solid #e5e5e5;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+  }
+
+  input:focus, select:focus, textarea:focus { border-color: #1a1a1a; }
+  input.error, select.error, textarea.error { border-color: #ff4444; }
+
+  textarea { resize: vertical; min-height: 100px; }
+
+  .hint { font-size: 0.72rem; color: #aaa; margin-top: 0.2rem; }
+
+  .btn-submit {
+    width: 100%; padding: 1rem;
+    background: #1a1a1a; color: white; border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; margin-top: 1.5rem;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #4CAF50; }
+  .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+  .success {
+    display: none;
+    background: #e8f5e9; border: 1px solid #4CAF50;
+    padding: 1rem; margin-top: 1rem;
+    font-size: 0.9rem; color: #2d6a30;
+    font-weight: 600; text-align: center;
+  }
+
+  .error-msg {
+    display: none;
+    background: #ffebee; border: 1px solid #ff4444;
+    padding: 1rem; margin-top: 1rem;
+    font-size: 0.9rem; color: #c62828;
+    font-weight: 600; text-align: center;
+  }
+
+  .divider {
+    height: 1px; background: #f0f0f0;
+    margin: 2rem 0;
+  }
+
+  .back-link {
+    display: inline-block; margin-top: 1.5rem;
+    font-size: 0.8rem; color: #888; text-decoration: none;
+    font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .back-link:hover { color: #1a1a1a; }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .card { padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">Entra<span>Group</span></div>
+  <h1>Opdracht toevoegen</h1>
+  <p class="subtitle">Vul het formulier in — de opdracht verschijnt direct op de website.</p>
+
+  <div class="divider"></div>
+
+  <form id="opdrachtForm">
+    <div class="form-grid">
+
+      <div class="form-group full">
+        <label>Functietitel *</label>
+        <input type="text" id="titel" placeholder="Bijv. Senior Java Developer" required>
+      </div>
+
+      <div class="form-group">
+        <label>Bedrijf *</label>
+        <input type="text" id="bedrijf" placeholder="Bijv. FinTech Startup" required>
+      </div>
+
+      <div class="form-group">
+        <label>Locatie *</label>
+        <input type="text" id="locatie" placeholder="Bijv. Amsterdam of Remote" required>
+      </div>
+
+      <div class="form-group">
+        <label>Werkvorm *</label>
+        <select id="werkvorm" required>
+          <option value="">Selecteer werkvorm</option>
+          <option value="Freelance">Freelance</option>
+          <option value="Detachering">Detachering</option>
+          <option value="Payroll">Payroll</option>
+          <option value="Vast">Vast</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tarief / Salaris *</label>
+        <input type="text" id="tarief" placeholder="Bijv. €85-€100/uur of €60k-€75k" required>
+      </div>
+
+      <div class="form-group">
+        <label>Looptijd *</label>
+        <input type="text" id="looptijd" placeholder="Bijv. 6 maanden of Vast" required>
+      </div>
+
+      <div class="form-group">
+        <label>Deadline *</label>
+        <input type="datetime-local" id="deadline" required>
+        <span class="hint">Na deze datum verdwijnt de opdracht automatisch</span>
+      </div>
+
+      <div class="form-group full">
+        <label>Skills *</label>
+        <input type="text" id="skills" placeholder="Bijv. Java, Spring Boot, AWS, Kubernetes" required>
+        <span class="hint">Komma gescheiden</span>
+      </div>
+
+      <div class="form-group full">
+        <label>Omschrijving *</label>
+        <textarea id="omschrijving" placeholder="Beschrijf de opdracht, vereisten en wat je zoekt in een kandidaat..." required></textarea>
+      </div>
+
+    </div>
+
+    <button type="button" class="btn-submit" id="submitBtn" onclick="submitOpdracht()">
+      Opdracht plaatsen
+    </button>
+
+    <div class="success" id="successMsg">
+      ✅ Opdracht succesvol geplaatst! Hij staat nu live op de website.
+    </div>
+    <div class="error-msg" id="errorMsg">
+      ❌ Er ging iets mis. Probeer het opnieuw.
+    </div>
+  </form>
+
+  <a href="index.html" class="back-link">← Terug naar website</a>
+</div>
+
+<script>
+  (function() {
+    const ww = localStorage.getItem('entra_auth');
+    if (ww !== 'ok') {
+      const input = prompt('Voer het wachtwoord in:');
+      if (input !== 'Gerard12!') {
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Inter,sans-serif;font-size:1rem;color:#888;">Geen toegang.</div>';
+        return;
+      }
+      localStorage.setItem('entra_auth', 'ok');
+    }
+  })();
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIwc89i2qQsguOgRMfeAXI0bhfSYHKlhWgbQRMYgDs8EmjyaGYuuM0qnH5JyTEFf0m/exec';
+
+  function submitOpdracht() {
+    const fields = ['titel', 'bedrijf', 'locatie', 'werkvorm', 'tarief', 'looptijd', 'deadline', 'skills', 'omschrijving'];
+    let valid = true;
+
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        valid = false;
+      } else {
+        el.classList.remove('error');
+      }
+    });
+
+    if (!valid) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Bezig met plaatsen...';
+
+    // Format deadline
+    const deadlineRaw = document.getElementById('deadline').value;
+    const deadlineFormatted = deadlineRaw.replace('T', ' ') + ':00';
+
+    const data = {
+      titel:        document.getElementById('titel').value,
+      bedrijf:      document.getElementById('bedrijf').value,
+      locatie:      document.getElementById('locatie').value,
+      werkvorm:     document.getElementById('werkvorm').value,
+      tarief:       document.getElementById('tarief').value,
+      looptijd:     document.getElementById('looptijd').value,
+      skills:       document.getElementById('skills').value,
+      deadline:     deadlineFormatted,
+      omschrijving: document.getElementById('omschrijving').value,
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(() => {
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('errorMsg').style.display = 'none';
+      document.getElementById('opdrachtForm').reset();
+      btn.disabled = false;
+      btn.textContent = 'Opdracht plaatsen';
+    })
+    .catch(() => {
+      document.getElementById('errorMsg').style.display = 'block';
+      document.getElementById('successMsg').style.display = 'none';
+      btn.disabled = false;
+      btn.textContent = 'Opdracht plaatsen';
+    });
+  }
+</script>
+
+</body>
+</html>
