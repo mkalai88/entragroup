@@ -37,7 +37,14 @@
 
   function formatDeadline(deadline) {
     if (!deadline) return null;
-    const date = new Date(deadline);
+    // Handle Google Sheets date format
+    let date;
+    if (typeof deadline === 'number') {
+      // Google Sheets serial date number
+      date = new Date((deadline - 25569) * 86400 * 1000);
+    } else {
+      date = new Date(deadline);
+    }
     if (isNaN(date)) return null;
     const now = new Date();
     const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
@@ -123,7 +130,7 @@
             status:       row.c[8]?.v || 'actief',
             omschrijving: row.c[9]?.v || '',
           }))
-          .filter(o => o.titel && o.status.toLowerCase() !== 'inactief' && !formatDeadline(o.deadline)?.expired);
+          .filter(o => o.titel && o.status.toLowerCase() !== 'inactief' && (o.deadline ? !formatDeadline(o.deadline)?.expired : true));
         renderOpdrachten(allOpdrachten);
       })
       .catch(() => {
