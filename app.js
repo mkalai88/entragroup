@@ -37,15 +37,16 @@
 
   function formatDeadline(deadline) {
     if (!deadline) return null;
-    // Handle Google Sheets date format
     let date;
     if (typeof deadline === 'number') {
       // Google Sheets serial date number
       date = new Date((deadline - 25569) * 86400 * 1000);
     } else {
-      date = new Date(deadline);
+      // Replace space with T for ISO format compatibility
+      const cleaned = String(deadline).trim().replace(' ', 'T');
+      date = new Date(cleaned);
     }
-    if (isNaN(date)) return null;
+    if (isNaN(date.getTime())) return null;
     const now = new Date();
     const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
     const diffHours = Math.floor((date - now) / (1000 * 60 * 60));
