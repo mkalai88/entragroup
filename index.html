@@ -897,11 +897,8 @@
     ">✕</button>
     <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#4CAF50; margin-bottom:0.5rem;">Reageer op opdracht</div>
     <h3 id="modalTitel" style="font-size:1.4rem; font-weight:900; text-transform:uppercase; margin-bottom:2rem; letter-spacing:-0.01em;"></h3>
-    <form id="reageerForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:0.8rem;">
-      <input type="hidden" name="access_key" value="3fe003fe-36bd-497c-8f25-5fcfbbf350a2">
-      <input type="hidden" name="subject" id="modalSubject" value="Nieuwe reactie op opdracht">
+    <form id="reageerForm" action="https://formspree.io/f/mzdjjdan" method="POST" style="display:flex; flex-direction:column; gap:0.8rem;">
       <input type="hidden" name="opdracht" id="modalOpdracht">
-      <input type="hidden" name="redirect" value="https://entragroup.nl/bedankt.html">
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
         <input type="text" name="voornaam" placeholder="Voornaam" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
         <input type="text" name="achternaam" placeholder="Achternaam" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
@@ -909,11 +906,8 @@
       <input type="email" name="email" placeholder="E-mailadres" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
       <input type="tel" name="telefoon" placeholder="Telefoonnummer" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none;">
       <textarea name="motivatie" placeholder="Korte motivatie / toelichting..." rows="3" required style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none; resize:vertical;"></textarea>
-      <div>
-        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#888; margin-bottom:0.4rem;">CV uploaden (PDF of Word)</div>
-        <input type="file" name="cv" accept=".pdf,.doc,.docx" style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.85rem; outline:none; width:100%; cursor:pointer;">
-      </div>
-      <button type="submit" style="
+      <input type="url" name="cv-link" placeholder="CV link (WeTransfer of Google Drive)" style="padding:0.8rem; border:1.5px solid #ddd; font-family:Inter,sans-serif; font-size:0.9rem; outline:none; width:100%;">
+      <button type="button" onclick="submitReageer()" style="
         background:#1a1a1a; color:white; border:none;
         padding:0.9rem 2rem; font-family:Inter,sans-serif;
         font-size:0.85rem; font-weight:800; letter-spacing:0.06em;

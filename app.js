@@ -271,16 +271,12 @@
       else { i.style.borderColor = '#ddd'; }
     });
     if (!valid) return;
-
-    // Update subject with opdracht title
-    document.getElementById('modalSubject').value = `Nieuwe reactie op opdracht: ${document.getElementById('modalOpdracht').value}`;
-
     const data = new FormData(form);
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: data
-    }).then(r => r.json()).then(result => {
-      if (result.success) {
+    fetch(form.action, {
+      method: 'POST', body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(r => {
+      if (r.ok) {
         closeReageer();
         form.reset();
         window.location.href = 'bedankt.html';
